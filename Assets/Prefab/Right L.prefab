@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 99790299872477482}
   - component: {fileID: 3899462406889323096}
   - component: {fileID: -8079096340656418143}
+  - component: {fileID: 1268866307258920432}
+  - component: {fileID: 5366308200866166361}
   m_Layer: 0
   m_Name: Right L
   m_TagString: Untagged
@@ -71,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 84cb71cadab1a8e48b2f276ab70daf3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,7 +101,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 1, y: 1}
     oldSize: {x: 0.29, y: 0.19}
     newSize: {x: 0.29, y: 0.19}
     adaptiveTilingThreshold: 0.5
@@ -108,9 +110,42 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.145, y: 0.095}
-      - {x: -0.145, y: -0.0035496484}
-      - {x: 0.04160084, y: -0.0041205063}
-      - {x: 0.041667998, y: -0.09557974}
-      - {x: 0.145, y: -0.095}
-      - {x: 0.145, y: 0.095}
+    - - {x: -0.29, y: 0}
+      - {x: -0.29, y: -0.10144834}
+      - {x: -0.102204256, y: -0.10163107}
+      - {x: -0.10217252, y: -0.19}
+      - {x: 0, y: -0.19}
+      - {x: 0, y: 0}
+--- !u!50 &1268866307258920432
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675561051794008815}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &5366308200866166361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675561051794008815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e68e2f1bb35a6b14ca3b552d7e5b686c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
