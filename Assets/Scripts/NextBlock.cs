@@ -9,6 +9,7 @@ public class NextBlock : MonoBehaviour
     [Header("Blocks")]
     [SerializeField] private GameObject[] m_Blocks;
     [SerializeField] private GameObject[] m_BlockList = new GameObject[5];
+    public GameObject m_CurrentBlock;
 
     [Header("Randomize")]
     private int m_RandomInt;
@@ -28,11 +29,11 @@ public class NextBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.O))
+        if(Input.GetKeyDown(KeyCode.P))
         {
             SpawnBlock();
             PushList();
-            BlockDisplay();
+            BlockDisplay();          
         }
     }
 
@@ -41,7 +42,6 @@ public class NextBlock : MonoBehaviour
         while (true)
         {
             m_RandomInt = Random.Range(0, m_Blocks.Length);
-            Debug.Log(m_RandomInt);
             for (int i = 0; i < m_BlockList.Length; i++)
             {
                 if (m_BlockList[i] == null)
@@ -51,7 +51,8 @@ public class NextBlock : MonoBehaviour
                     break;
                 }
             }
-            yield return new WaitForSeconds(10);
+            int RandomSec = Random.Range(3, 6);
+            yield return new WaitForSeconds(RandomSec);
         }
     }
 
@@ -76,6 +77,8 @@ public class NextBlock : MonoBehaviour
         if (m_BlockList.Length > 0)
         {
             Instantiate(m_BlockList[0], m_SpawnPoint, Quaternion.identity);
+            m_CurrentBlock = m_BlockList[0];
+            m_CurrentBlock.GetComponent<MoveBlock>().m_IsCurrentBlock = true;
         }
     }
 
