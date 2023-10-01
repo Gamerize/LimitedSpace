@@ -29,7 +29,6 @@ public class MoveBlock : MonoBehaviour
 
     private void OnEnable()
     {
-        m_InputSystem.Enable();
         m_InputSystem.Player.Movement.performed += OnMovementPerformed;
         m_InputSystem.Player.Movement.canceled += OnMovementCanceled;
         m_InputSystem.Player.Rotation.performed += OnRotationPerformed;
@@ -39,7 +38,6 @@ public class MoveBlock : MonoBehaviour
 
     private void OnDisable()
     {
-        m_InputSystem.Disable();
         m_InputSystem.Player.Movement.performed -= OnMovementPerformed;
         m_InputSystem.Player.Movement.canceled -= OnMovementCanceled;
         m_InputSystem.Player.Rotation.performed -= OnRotationPerformed;
@@ -47,11 +45,29 @@ public class MoveBlock : MonoBehaviour
         m_InputSystem.Player.Confirm.performed -= Confirm;
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+
+            if(hit.collider != null) 
+            {
+                if(hit.collider.CompareTag("Player"))
+                {
+                    m_InputSystem.Enable();
+                }
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
         m_Rb.velocity = m_MoveVector * m_MoveSpeed;
         transform.Rotate(Vector3.forward * m_RotateVector.y * m_RotateAngle * Time.deltaTime);
     }
+
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
@@ -61,6 +77,7 @@ public class MoveBlock : MonoBehaviour
     private void OnMovementCanceled(InputAction.CallbackContext value) 
     {
         m_MoveVector = Vector2.zero;
+        SnapToGrid();
     }
 
     private void OnRotationPerformed(InputAction.CallbackContext value)
@@ -78,6 +95,8 @@ public class MoveBlock : MonoBehaviour
     {
         m_Rb.constraints = RigidbodyConstraints2D.FreezeAll;
         m_Collider.isTrigger = true;
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        m_InputSystem.Disable();
     }
 
     void SnapTo90()
@@ -86,4 +105,14 @@ public class MoveBlock : MonoBehaviour
         float SnapRotation = Mathf.Round(zRotation / 90f) * 90f;
         transform.eulerAngles = new Vector3(0, 0, SnapRotation);
     }
+
+    void SnapToGrid()
+    {
+        Vector3 OldPosition = transform.position;
+        int RoundX = Mathf.FloorToInt(OldPosition.x);
+        int RoundY = Mathf.FloorToInt(OldPosition.y);
+        transform.position = new Vector3(RoundX, RoundY, 0);
+    }
+
+
 }
