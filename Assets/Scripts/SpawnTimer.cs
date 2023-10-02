@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeleteBlock : MonoBehaviour
+public class SpawnTimer : MonoBehaviour
 {
-    
     // Start is called before the first frame update
     void Start()
     {

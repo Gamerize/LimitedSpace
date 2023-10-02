@@ -8,18 +8,21 @@ public class NextBlock : MonoBehaviour
 {
     [Header("Blocks")]
     [SerializeField] private GameObject[] m_Blocks;
-    [SerializeField] private GameObject[] m_BlockList = new GameObject[5];
+    private GameObject[] m_BlockList = new GameObject[6];
     public GameObject m_CurrentBlock;
 
     [Header("Randomize")]
     private int m_RandomInt;
 
-    [Header("float")]
+    [Header("Num")]
     public float m_RandomSec;
+    public int m_Turn = 0;
 
     [Header("UI")]
     [SerializeField] Image[] m_BlockSlots;
     [SerializeField] Sprite m_GridImage;
+
+    public bool m_GameOver;
 
     public Vector3 m_SpawnPoint = Vector3.zero;
 
@@ -27,16 +30,24 @@ public class NextBlock : MonoBehaviour
     void Start()
     {
         StartCoroutine(AddNextBlock());
+        m_GameOver = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P) && !CheckArrayEmpty())
+        if(Input.GetMouseButtonDown(1) && !CheckArrayEmpty())
         {
             SpawnBlock();
             PushList();
-            BlockDisplay();          
+            BlockDisplay();
+            m_Turn++;
+        }
+
+        if (m_BlockList[m_BlockList.Length-1] != null) 
+        {
+            m_GameOver = true;
+            Debug.Log("Game Over");
         }
     }
 
@@ -51,17 +62,18 @@ public class NextBlock : MonoBehaviour
                 {
                     m_BlockList[i] = m_Blocks[m_RandomInt];
                     BlockDisplay();
+                    Debug.Log("added");
                     break;
                 }
             }
-            m_RandomSec = Random.Range(3, 6);
+            m_RandomSec = Random.Range(4, 6);
             yield return new WaitForSeconds(m_RandomSec);
         }
     }
 
     void BlockDisplay()
     {
-        for (int i = 0; i < m_BlockList.Length; i++)
+        for (int i = 0; i < 5; i++)
         {
             if (m_BlockList[i] != null)
             {

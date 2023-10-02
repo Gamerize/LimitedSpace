@@ -113,7 +113,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Up"",
                     ""id"": ""b1ee21d9-d5f7-436e-aaf1-7efd9a67c242"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -124,7 +124,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Down"",
                     ""id"": ""2419fd03-f860-4f79-8dde-f60b70fcaf4e"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -157,7 +157,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2baff296-6dba-4fdd-b3bf-29bb762ad7d6"",
-                    ""path"": ""<Keyboard>/o"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -43,7 +43,7 @@ public class MoveBlock : MonoBehaviour
             m_NextBlock = TargetObject.GetComponent<NextBlock>();
         }
 
-        m_RandomDeleteTime = Random.Range(3, 5);
+        m_RandomDeleteTime = Random.Range(15, 30);
     }
 
     private void OnEnable()
@@ -70,6 +70,11 @@ public class MoveBlock : MonoBehaviour
     {
         m_Rb.velocity = m_MoveVector * m_MoveSpeed;
         transform.Rotate(Vector3.forward * m_RotateVector.y * m_RotateAngle * Time.deltaTime);
+        if(m_RandomDeleteTime == 0)
+        {
+            //StartCoroutine(FadeOut());
+            Destroy(gameObject);
+        }
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
@@ -102,11 +107,13 @@ public class MoveBlock : MonoBehaviour
         if (!IsColliding())
         {
             m_Rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            m_Collider.isTrigger = true;
             m_IsCurrentBlock = false;
             m_SpriteRenderer.sortingOrder = 1;
-        }   
-        else
-            m_NextBlock.m_CurrentBlock.GetComponent<PolygonCollider2D>().isTrigger = false;
+            m_RandomDeleteTime--;
+            Debug.Log(m_RandomDeleteTime);
+        }
+        m_NextBlock.m_CurrentBlock.GetComponent<PolygonCollider2D>().isTrigger = false;
     }
 
     void SnapTo90()
@@ -142,7 +149,26 @@ public class MoveBlock : MonoBehaviour
 
     public bool IsColliding()
     {
-        Debug.Log(m_IsColliding);
         return m_IsColliding;
     }
+
+    //IEnumerator FadeOut()
+    //{
+    //    SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+    //    Color tempColor = sprite.color;
+
+    //    while (tempColor.a >= 1f)
+    //    {
+    //        tempColor.a += Time.deltaTime / 1f;
+    //        sprite.color = tempColor;
+
+    //        if (tempColor.a <= 0f)
+    //        {
+    //            tempColor.a = 0f; 
+    //        }
+    //        yield return null;
+    //    }
+
+    //    Destroy(gameObject);
+    //}
 }
