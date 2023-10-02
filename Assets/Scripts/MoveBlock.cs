@@ -12,6 +12,7 @@ public class MoveBlock : MonoBehaviour
     private Vector2 m_RotateVector;
 
     [SerializeField] NextBlock m_NextBlock;
+    [SerializeField] Score m_ScoreManager;
 
     private SpriteRenderer m_SpriteRenderer;
 
@@ -37,10 +38,16 @@ public class MoveBlock : MonoBehaviour
         m_IsCurrentBlock = true;
         m_SpriteRenderer= GetComponent<SpriteRenderer>();
 
-        GameObject TargetObject = GameObject.FindGameObjectWithTag("Manager");
-        if(TargetObject != null)
+        GameObject TargetManager = GameObject.FindGameObjectWithTag("Manager");
+        if(TargetManager != null)
         {
-            m_NextBlock = TargetObject.GetComponent<NextBlock>();
+            m_NextBlock = TargetManager.GetComponent<NextBlock>();
+        }
+
+        GameObject TargetDisplay = GameObject.FindGameObjectWithTag("Display");
+        if(TargetDisplay != null) 
+        {
+            m_ScoreManager = TargetDisplay.GetComponent<Score>();
         }
 
         m_RandomDeleteTime = Random.Range(15, 30);
@@ -111,6 +118,7 @@ public class MoveBlock : MonoBehaviour
             m_IsCurrentBlock = false;
             m_SpriteRenderer.sortingOrder = 1;
             m_RandomDeleteTime--;
+
             Debug.Log(m_RandomDeleteTime);
         }
         m_NextBlock.m_CurrentBlock.GetComponent<PolygonCollider2D>().isTrigger = false;
