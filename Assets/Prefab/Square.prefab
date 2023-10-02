@@ -110,10 +110,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.095, y: 0.095}
-      - {x: -0.095, y: -0.095}
-      - {x: 0.095, y: -0.095}
-      - {x: 0.095, y: 0.095}
+    - - {x: -0.08735342, y: 0.089602426}
+      - {x: -0.08780322, y: -0.08645383}
+      - {x: 0.08825302, y: -0.08735342}
+      - {x: 0.08870282, y: 0.08780322}
 --- !u!114 &7655367928381936868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsCurrentBlock: 0
+  m_IsColliding: 0
 --- !u!50 &8503521234454171748
 Rigidbody2D:
   serializedVersion: 4

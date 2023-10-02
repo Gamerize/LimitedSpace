@@ -22,6 +22,7 @@ public class MoveBlock : MonoBehaviour
     private float m_Time = 2f;
 
     public bool m_IsCurrentBlock;
+    public bool m_IsColliding;
 
     // Start is called before the first frame update
     void Awake()
@@ -86,11 +87,15 @@ public class MoveBlock : MonoBehaviour
 
     private void Confirm(InputAction.CallbackContext context)
     {
-        m_Rb.constraints = RigidbodyConstraints2D.FreezeAll;
         m_Collider.isTrigger = true;
-        gameObject.tag = "Placed";
-        m_IsCurrentBlock = false;
-        m_SpriteRenderer.sortingOrder = 1;
+        if (!IsColliding())
+        {
+            m_Rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            m_IsCurrentBlock = false;
+            m_SpriteRenderer.sortingOrder = 1;
+        }   
+        else
+            m_Collider.isTrigger = false;
     }
 
     void SnapTo90()
@@ -108,5 +113,25 @@ public class MoveBlock : MonoBehaviour
         transform.position = new Vector3(RoundX, RoundY, 0);
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player"))
+        {
+            m_IsColliding = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            m_IsColliding = false;
+        }
+    }
+
+    public bool IsColliding()
+    {
+        Debug.Log(m_IsColliding);
+        return m_IsColliding;
+    }
 }
