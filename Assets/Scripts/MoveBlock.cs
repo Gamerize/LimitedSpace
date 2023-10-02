@@ -11,6 +11,8 @@ public class MoveBlock : MonoBehaviour
     private Vector2 m_MoveVector = Vector2.zero;
     private Vector2 m_RotateVector;
 
+    [SerializeField] NextBlock m_NextBlock;
+
     private SpriteRenderer m_SpriteRenderer;
 
     private Rigidbody2D m_Rb = null;
@@ -20,6 +22,7 @@ public class MoveBlock : MonoBehaviour
     private float m_RotateAngle = 90f;
     private float m_CurrentTime;
     private float m_Time = 2f;
+    public int m_RandomDeleteTime;
 
     public bool m_IsCurrentBlock;
     public bool m_IsColliding;
@@ -33,6 +36,14 @@ public class MoveBlock : MonoBehaviour
         m_CurrentTime = m_Time;
         m_IsCurrentBlock = true;
         m_SpriteRenderer= GetComponent<SpriteRenderer>();
+
+        GameObject TargetObject = GameObject.FindGameObjectWithTag("Manager");
+        if(TargetObject != null)
+        {
+            m_NextBlock = TargetObject.GetComponent<NextBlock>();
+        }
+
+        m_RandomDeleteTime = Random.Range(3, 5);
     }
 
     private void OnEnable()
@@ -87,7 +98,7 @@ public class MoveBlock : MonoBehaviour
 
     private void Confirm(InputAction.CallbackContext context)
     {
-        m_Collider.isTrigger = true;
+        m_NextBlock.m_CurrentBlock.GetComponent<PolygonCollider2D>().isTrigger = true;
         if (!IsColliding())
         {
             m_Rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -95,7 +106,7 @@ public class MoveBlock : MonoBehaviour
             m_SpriteRenderer.sortingOrder = 1;
         }   
         else
-            m_Collider.isTrigger = false;
+            m_NextBlock.m_CurrentBlock.GetComponent<PolygonCollider2D>().isTrigger = false;
     }
 
     void SnapTo90()

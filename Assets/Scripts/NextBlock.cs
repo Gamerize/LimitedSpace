@@ -14,6 +14,9 @@ public class NextBlock : MonoBehaviour
     [Header("Randomize")]
     private int m_RandomInt;
 
+    [Header("float")]
+    public float m_RandomSec;
+
     [Header("UI")]
     [SerializeField] Image[] m_BlockSlots;
     [SerializeField] Sprite m_GridImage;
@@ -29,7 +32,7 @@ public class NextBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P) && m_BlockList != null)
+        if(Input.GetKeyDown(KeyCode.P) && !CheckArrayEmpty())
         {
             SpawnBlock();
             PushList();
@@ -51,8 +54,8 @@ public class NextBlock : MonoBehaviour
                     break;
                 }
             }
-            int RandomSec = Random.Range(3, 6);
-            yield return new WaitForSeconds(RandomSec);
+            m_RandomSec = Random.Range(3, 6);
+            yield return new WaitForSeconds(m_RandomSec);
         }
     }
 
@@ -89,5 +92,17 @@ public class NextBlock : MonoBehaviour
             m_BlockList[i] = m_BlockList[i + 1];
             m_BlockList[i + 1] = null;
         }
+    }
+
+    bool CheckArrayEmpty()
+    {
+        foreach (var obj in m_BlockList)
+        {
+            if(obj != null)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
