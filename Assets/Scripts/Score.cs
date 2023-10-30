@@ -5,14 +5,15 @@ using TMPro;
 
 public class Score : MonoBehaviour
 {
-    public int m_Score;
+    public int m_CurrentScore;
+    public int m_Highscore;
 
     [SerializeField] TextMeshProUGUI m_ScoreText;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_Score = 0;
+        m_CurrentScore = 0;
     }
 
     // Update is called once per frame
@@ -23,6 +24,6 @@ public class Score : MonoBehaviour
 
     private void DisplayScore()
     {
-        m_ScoreText.text = m_Score.ToString();
+        m_ScoreText.text = m_CurrentScore.ToString();
     }
 }

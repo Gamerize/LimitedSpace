@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 
 public class MoveBlock : MonoBehaviour  
@@ -23,7 +22,7 @@ public class MoveBlock : MonoBehaviour
     private float m_RotateAngle = 90f;
     private float m_CurrentTime;
     private float m_Time = 2f;
-    public int m_RandomDeleteTime;
+    public float m_RandomDeleteTime;
 
     public bool m_IsCurrentBlock;
     public bool m_IsColliding;
@@ -50,7 +49,7 @@ public class MoveBlock : MonoBehaviour
             m_ScoreManager = TargetDisplay.GetComponent<Score>();
         }
 
-        m_RandomDeleteTime = Random.Range(15, 30);
+        m_RandomDeleteTime = Random.Range(50, 60);
     }
 
     private void OnEnable()
@@ -77,7 +76,11 @@ public class MoveBlock : MonoBehaviour
     {
         m_Rb.velocity = m_MoveVector * m_MoveSpeed;
         transform.Rotate(Vector3.forward * m_RotateVector.y * m_RotateAngle * Time.deltaTime);
-        if(m_RandomDeleteTime == 0)
+
+        m_RandomDeleteTime -= Time.deltaTime;
+        Debug.Log(m_RandomDeleteTime);
+
+        if(m_RandomDeleteTime <= 0f)
         {
             //StartCoroutine(FadeOut());
             Destroy(gameObject);
@@ -117,9 +120,6 @@ public class MoveBlock : MonoBehaviour
             m_Collider.isTrigger = true;
             m_IsCurrentBlock = false;
             m_SpriteRenderer.sortingOrder = 1;
-            m_RandomDeleteTime--;
-
-            Debug.Log(m_RandomDeleteTime);
         }
         m_NextBlock.m_CurrentBlock.GetComponent<PolygonCollider2D>().isTrigger = false;
     }

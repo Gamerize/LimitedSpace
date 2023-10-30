@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NextBlock: {fileID: 0}
+  m_ScoreManager: {fileID: 0}
   m_RandomDeleteTime: 0
   m_IsCurrentBlock: 1
   m_IsColliding: 0

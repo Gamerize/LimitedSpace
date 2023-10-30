@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,14 +15,21 @@ public class NextBlock : MonoBehaviour
     private int m_RandomInt;
 
     [Header("Num")]
-    public float m_RandomSec;
-    public int m_Turn = 0;
+    public int m_Turn;
 
     [Header("UI")]
     [SerializeField] Image[] m_BlockSlots;
     [SerializeField] Sprite m_GridImage;
+    [SerializeField] TextMeshProUGUI m_TurnText;
+    [SerializeField] TextMeshProUGUI m_HighscoreText;
+
+    [Header("Script")]
+    [SerializeField] Score m_Score;
+
+    [SerializeField] GameObject m_Warning;
 
     public bool m_GameOver;
+    private bool m_HighscoreCalculate;
 
     public Vector3 m_SpawnPoint = Vector3.zero;
 
@@ -31,6 +38,8 @@ public class NextBlock : MonoBehaviour
     {
         StartCoroutine(AddNextBlock());
         m_GameOver = false;
+        m_Turn= 0;
+        m_Warning.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,13 +51,34 @@ public class NextBlock : MonoBehaviour
             PushList();
             BlockDisplay();
             m_Turn++;
+            m_Score.m_CurrentScore += 20;
         }
 
         if (m_BlockList[m_BlockList.Length-1] != null) 
         {
             m_GameOver = true;
-            Debug.Log("Game Over");
+            if(!m_HighscoreCalculate)
+            {
+                int TurnScore = m_Turn * 10;
+                m_Score.m_CurrentScore += TurnScore;
+                m_HighscoreText.text = "Your Highscore is " +m_Score.m_CurrentScore.ToString();
+                m_HighscoreCalculate = true;
+            }
         }
+
+        if (m_BlockList[m_BlockList.Length - 2] != null)
+        {
+            m_Warning.SetActive(true);
+        }
+        else
+            m_Warning.SetActive(false);
+
+        DisplayTurn();
+    }
+
+    private void DisplayTurn()
+    {
+        m_TurnText.text = m_Turn.ToString();
     }
 
     private IEnumerator AddNextBlock()
@@ -66,8 +96,7 @@ public class NextBlock : MonoBehaviour
                     break;
                 }
             }
-            m_RandomSec = Random.Range(4, 6);
-            yield return new WaitForSeconds(m_RandomSec);
+            yield return new WaitForSeconds(3);
         }
     }
 
